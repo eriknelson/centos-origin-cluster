@@ -38,10 +38,10 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
   config.vm.provision :shell, :path => "setup.sh", :args => PROJECTS.values.join(' ')
 
-  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  config.vm.synced_folder ".", "/vagrant", type: "sshfs"
 
   PROJECTS.each do |name, path|
-    type = :nfs
+    type = :sshfs
     config.vm.synced_folder path, path, type: type
   end
 
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
       :libvirt__netmask => "255.255.255.0",
       :libvirt__network_name => "centos_cluster_net",
       :libvirt__dhcp_enabled => false
-    node1.vm.synced_folder ".", "/vagrant", type: "nfs"
+    node1.vm.synced_folder ".", "/vagrant", type: "sshfs"
     node1.vm.provider :libvirt do |libvirt|
       libvirt.driver = "kvm"
       libvirt.memory = 4096
@@ -69,7 +69,7 @@ Vagrant.configure("2") do |config|
       :libvirt__netmask => "255.255.255.0",
       :libvirt__network_name => "centos_cluster_net",
       :libvirt__dhcp_enabled => false
-    node2.vm.synced_folder ".", "/vagrant", type: "nfs"
+    node2.vm.synced_folder ".", "/vagrant", type: "sshfs"
     node2.vm.provider :libvirt do |libvirt|
       libvirt.driver = "kvm"
       libvirt.memory = 4096
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
       :libvirt__netmask => "255.255.255.0",
       :libvirt__network_name => "centos_cluster_net",
       :libvirt__dhcp_enabled => false
-    master.vm.synced_folder ".", "/vagrant", type: "nfs"
+    master.vm.synced_folder ".", "/vagrant", type: "sshfs"
     master.vm.provider :libvirt do |libvirt|
       libvirt.driver = "kvm"
       libvirt.memory = 8192
